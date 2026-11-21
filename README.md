@@ -6,7 +6,7 @@ Short version: Ponytail made the app smaller (half the lines, about a quarter le
 
 **Read the full write-up on [dev.to](https://dev.to/earlgreyhot1701d).**
 
-![Ponytail x Spell It case study card. Same PRD, same model, same prompt. Line counts: original 989, Ponytail off 416, Ponytail full 206. A tile row spells banana as Ba, Na, Na.](assets/article/cover.webp)
+![Ponytail x Spell It case study card. Same PRD, same model, same prompt. Half the lines, same app, better questions. Line counts: original 989, Ponytail off 416, Ponytail full 206, which is about 79% fewer lines than the original and about 50% fewer than Ponytail off. A tile row spells banana as Ba, Na, Na.](assets/article/cover.webp)
 
 ---
 
@@ -87,7 +87,7 @@ I didn't help with code. I was ready to send a one-line follow-up for any failed
 | Files | 1 | 1 | 1 |
 | Dependencies | 0 | 0 | 0 |
 
-![Size comparison by lines. JavaScript: original 319, A 151, B 109. CSS: original 595, A 227, B 61. Total: 989, 416, 206. Acceptance checks: 9, 8 and 9 of 9. Build cost: $0.85 for A, $0.73 for B. Build time: 1 minute 49 seconds for A, 1 minute 29 seconds for B.](assets/article/size-comparison.webp)
+![Half the lines: size comparison by lines. JavaScript: original 319, A 151, B 109. CSS: original 595, A 227, B 61. Total: 989, 416, 206. Acceptance checks: 9, 8 and 9 of 9. Build cost: $0.85 for A, $0.73 for B. Build time: 1 minute 49 seconds for A, 1 minute 29 seconds for B.](assets/article/size-comparison.webp)
 
 ### Does it work?
 
