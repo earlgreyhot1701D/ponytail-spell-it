@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spell It</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Oswald:wght@500;600&family=Space+Grotesk:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #080a09; --panel: #111514; --ink: #f0e6d2; --muted: #a99d89;
+    --brass: #b48345; --brass-bright: #d2a668; --green: #9bc879;
+    --amber: #e0ad58; --focus: #f0c77d;
+    --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body {
+    margin: 0; min-height: 100vh; padding: 12px;
+    background: var(--bg); color: var(--ink);
+    font: 16px/1.5 "Space Grotesk", system-ui, sans-serif;
+  }
+  .frame {
+    min-height: calc(100vh - 24px); border: 1px solid var(--brass); border-radius: 5px;
+    box-shadow: inset 0 0 0 4px var(--bg), inset 0 0 0 5px rgba(180,131,69,.35);
+    display: flex; flex-direction: column;
+  }
+  main { width: 100%; max-width: 760px; margin: 0 auto; padding: 40px 20px 24px; flex: 1; }
+  .label { font: 12px var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin: 0; }
+  h1 { font: 600 clamp(48px, 10vw, 76px)/1 Oswald, Impact, sans-serif; letter-spacing: .04em; color: var(--brass-bright); margin: 6px 0 4px; text-transform: uppercase; }
+  .tagline { margin: 0 0 28px; color: var(--ink); }
+  .panel { background: var(--panel); border: 1px solid var(--brass); border-radius: 4px; padding: 14px 16px; }
+  label.label { display: block; margin-bottom: 6px; }
+  #word {
+    width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(180,131,69,.5);
+    color: var(--ink); font: 500 40px/1.2 var(--mono); padding: 4px 2px; border-radius: 3px;
+  }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+  .examples { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 24px; padding: 0; list-style: none; }
+  .examples button {
+    font: 13px var(--mono); color: var(--ink); background: var(--panel);
+    border: 1px solid var(--brass); border-radius: 3px; padding: 6px 12px; cursor: pointer;
+  }
+  .examples button:hover { color: var(--brass-bright); }
+  .examples button[aria-pressed="true"] { background: var(--brass); color: var(--bg); box-shadow: inset 0 2px 3px rgba(0,0,0,.45); }
+  #verdict { font: 600 22px/1.3 var(--mono); margin: 0; color: var(--muted); }
+  #verdict.full { color: var(--green); }
+  #verdict.partial, #verdict.error { color: var(--amber); }
+  #symbols { font: 15px var(--mono); color: var(--muted); margin: 6px 0 0; overflow-wrap: anywhere; min-height: 1.5em; }
+  #tiles { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 22px 0 0; }
+  .tile {
+    --h: 0; width: 92px; height: 104px; position: relative; border-radius: 4px;
+    border: 2px solid hsl(var(--h) 60% 58%); background: hsl(var(--h) 25% 9%);
+    font-family: var(--mono); text-align: center;
+  }
+  .tile .num { position: absolute; top: 5px; left: 7px; font-size: 12px; color: var(--muted); }
+  .tile .sym { display: block; padding-top: 22px; font-size: 34px; font-weight: 600; line-height: 1.1; color: hsl(var(--h) 75% 70%); }
+  .tile .name { position: absolute; bottom: 7px; left: 2px; right: 2px; font-size: 10.5px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tile.none { border: 2px dashed var(--amber); background: #161514; }
+  .tile.none .sym { color: #8a857c; }
+  .tile.none .name { color: var(--amber); }
+  footer { font: 12px var(--mono); color: var(--muted); text-align: center; padding: 16px; border-top: 1px solid rgba(180,131,69,.35); }
+  @media (max-width: 480px) {
+    main { padding-top: 24px; }
+    .tile { width: 74px; height: 88px; }
+    .tile .sym { font-size: 28px; padding-top: 18px; }
+    .tile .name { font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+<div class="frame">
+  <main>
+    <header>
+      <p class="label">Specimen instrument 118</p>
+      <h1>Spell It</h1>
+      <p class="tagline">Build words from the elements.</p>
+    </header>
+
+    <div class="panel">
+      <label class="label" for="word">Type a word</label>
+      <input id="word" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus>
+    </div>
+
+    <ul class="examples" aria-label="Examples" id="examples"></ul>
+
+    <section class="panel" aria-live="polite">
+      <p id="verdict">Type a word to test the table.</p>
+      <p id="symbols"></p>
+    </section>
+
+    <ul id="tiles" aria-label="Element tiles"></ul>
+  </main>
+  <footer>Real element symbols · deterministic · no randomness · nothing stored or sent</footer>
+</div>
+
+<script>
+// STUB S1: share a word via a link (e.g. ?w=bacon) — not built.
+// STUB S2: show every possible spelling, not just one — not built.
+
+const ELEMENTS = ("H Hydrogen,He Helium,Li Lithium,Be Beryllium,B Boron,C Carbon,N Nitrogen,O Oxygen,F Fluorine,Ne Neon," +
+  "Na Sodium,Mg Magnesium,Al Aluminium,Si Silicon,P Phosphorus,S Sulfur,Cl Chlorine,Ar Argon,K Potassium,Ca Calcium," +
+  "Sc Scandium,Ti Titanium,V Vanadium,Cr Chromium,Mn Manganese,Fe Iron,Co Cobalt,Ni Nickel,Cu Copper,Zn Zinc," +
+  "Ga Gallium,Ge Germanium,As Arsenic,Se Selenium,Br Bromine,Kr Krypton,Rb Rubidium,Sr Strontium,Y Yttrium,Zr Zirconium," +
+  "Nb Niobium,Mo Molybdenum,Tc Technetium,Ru Ruthenium,Rh Rhodium,Pd Palladium,Ag Silver,Cd Cadmium,In Indium,Sn Tin," +
+  "Sb Antimony,Te Tellurium,I Iodine,Xe Xenon,Cs Caesium,Ba Barium,La Lanthanum,Ce Cerium,Pr Praseodymium,Nd Neodymium," +
+  "Pm Promethium,Sm Samarium,Eu Europium,Gd Gadolinium,Tb Terbium,Dy Dysprosium,Ho Holmium,Er Erbium,Tm Thulium,Yb Ytterbium," +
+  "Lu Lutetium,Hf Hafnium,Ta Tantalum,W Tungsten,Re Rhenium,Os Osmium,Ir Iridium,Pt Platinum,Au Gold,Hg Mercury," +
+  "Tl Thallium,Pb Lead,Bi Bismuth,Po Polonium,At Astatine,Rn Radon,Fr Francium,Ra Radium,Ac Actinium,Th Thorium," +
+  "Pa Protactinium,U Uranium,Np Neptunium,Pu Plutonium,Am Americium,Cm Curium,Bk Berkelium,Cf Californium,Es Einsteinium,Fm Fermium," +
+  "Md Mendelevium,No Nobelium,Lr Lawrencium,Rf Rutherfordium,Db Dubnium,Sg Seaborgium,Bh Bohrium,Hs Hassium,Mt Meitnerium,Ds Darmstadtium," +
+  "Rg Roentgenium,Cn Copernicium,Nh Nihonium,Fl Flerovium,Mc Moscovium,Lv Livermorium,Ts Tennessine,Og Oganesson")
+  .split(",").map((s, i) => { const [sym, name] = s.split(" "); return { sym, name, num: i + 1 }; });
+const BY_SYM = new Map(ELEMENTS.map(e => [e.sym.toLowerCase(), e]));
+
+// Returns [{el} | {letter}] placing the most letters. DP from the end; ties prefer 2-letter, then 1-letter, then skip, so output is deterministic.
+function spell(raw) {
+  const w = raw.toLowerCase().replace(/[^a-z]/g, "");
+  const n = w.length, best = new Array(n + 1).fill(0), pick = new Array(n);
+  for (let i = n - 1; i >= 0; i--) {
+    let score = best[i + 1], choice = 0; // 0 = skip
+    const one = BY_SYM.has(w[i]) ? 1 + best[i + 1] : -1;
+    const two = i + 1 < n && BY_SYM.has(w.slice(i, i + 2)) ? 2 + best[i + 2] : -1;
+    if (one > score) { score = one; choice = 1; }
+    if (two >= score && two > 0) { score = two; choice = 2; }
+    best[i] = score; pick[i] = choice;
+  }
+  const out = [];
+  for (let i = 0; i < n; ) {
+    const c = pick[i];
+    if (c === 0) { out.push({ letter: w[i].toUpperCase() }); i++; }
+    else { out.push({ el: BY_SYM.get(w.slice(i, i + c)) }); i += c; }
+  }
+  return out;
+}
+
+const $ = id => document.getElementById(id);
+const input = $("word"), verdict = $("verdict"), symbols = $("symbols"), tiles = $("tiles"), examples = $("examples");
+const EXAMPLES = ["banana", "brain", "nacho", "irony", "bacon", "periodic"];
+
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+function tile(part) {
+  const li = el("li", part.el ? "tile" : "tile none");
+  li.setAttribute("role", "img");
+  if (part.el) {
+    const { sym, name, num } = part.el;
+    li.style.setProperty("--h", (num * 17) % 360);
+    li.setAttribute("aria-label", `${sym}, ${name}, atomic number ${num}`);
+    li.append(el("span", "num", num), el("span", "sym", sym), el("span", "name", name));
+  } else {
+    li.setAttribute("aria-label", `${part.letter}, no element`);
+    li.append(el("span", "num", "—"), el("span", "sym", part.letter), el("span", "name", "No element"));
+  }
+  [...li.children].forEach(c => c.setAttribute("aria-hidden", "true"));
+  return li;
+}
+
+function render() {
+  try {
+    const raw = input.value;
+    for (const b of examples.querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.textContent === raw.trim().toLowerCase()));
+    // Long words shrink to fit: 40px down to 16px.
+    input.style.fontSize = Math.max(16, Math.min(40, 600 / Math.max(raw.length, 1))) + "px";
+    const parts = spell(raw);
+    tiles.replaceChildren();
+    if (!parts.length) {
+      verdict.className = ""; verdict.textContent = "Type a word to test the table."; symbols.textContent = ""; return;
+    }
+    const missing = parts.filter(p => !p.el).length;
+    verdict.className = missing ? "partial" : "full";
+    verdict.textContent = missing ? `${missing} letter${missing === 1 ? "" : "s"} could not be placed` : "Fully spellable";
+    symbols.textContent = parts.map(p => p.el ? p.el.sym : p.letter + "?").join(" · ");
+    const frag = document.createDocumentFragment();
+    parts.forEach(p => frag.append(tile(p)));
+    tiles.append(frag);
+  } catch (err) {
+    tiles.replaceChildren(); symbols.textContent = "";
+    verdict.className = "error"; verdict.textContent = "Something went wrong. Try another word.";
+  }
+}
+
+for (const w of EXAMPLES) {
+  const li = el("li"), b = el("button", null, w);
+  b.type = "button"; b.setAttribute("aria-pressed", "false");
+  b.addEventListener("click", () => { input.value = w; render(); input.focus(); });
+  li.append(b); examples.append(li);
+}
+input.addEventListener("input", render);
+render();
+
+// Self-check against the PRD acceptance table (results in the console).
+(() => {
+  const line = w => spell(w).map(p => p.el ? p.el.sym : p.letter + "?").join(" · ");
+  const miss = w => spell(w).filter(p => !p.el).length;
+  console.assert(ELEMENTS.length === 118 && ELEMENTS[117].sym === "Og", "118 elements");
+  console.assert(line("banana") === "Ba · Na · Na", "banana");
+  console.assert(line("kiro") === "K · Ir · O", "kiro");
+  console.assert(line("BaCoN") === line("bacon") && line("ba-con!") === line("bacon") && miss("bacon") === 0, "bacon");
+  console.assert(miss("periodic") === 1, "periodic");
+  console.assert(miss("quiz") === 2, "quiz");
+  console.assert(miss("jazz") === 4, "jazz");
+  console.assert(spell("").length === 0, "empty");
+})();
+</script>
+</body>
+</html>
