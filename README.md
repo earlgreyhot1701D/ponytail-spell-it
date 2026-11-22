@@ -6,6 +6,8 @@ Short version: Ponytail made the app smaller (half the lines, about a quarter le
 
 **Read the full write-up on [dev.to](https://dev.to/earlgreyhot1701d).**
 
+*The experiment is frozen as it ran on Nov 21, 2026 (tag `experiment-2026-11-21`). Anything added later is listed in [ADDENDUM.md](ADDENDUM.md).*
+
 ![Ponytail x Spell It case study card. Same PRD, same model, same prompt. Half the lines, same app, better questions. Line counts: original 989, Ponytail off 416, Ponytail full 206, which is about 79% fewer lines than the original and about 50% fewer than Ponytail off. A tile row spells banana as Ba, Na, Na.](assets/article/cover.webp)
 
 ---
@@ -192,6 +194,9 @@ gifs/                same demo on each build
 assets/article/      graphics from the write-up
 results/             full scorecard
 audits/              raw Ponytail review and audit output
+tools/               scripts to rerun the checks (added later)
+evidence/            build replies and cost screenshots (added later)
+ADDENDUM.md          what was added after the experiment, and why
 ```
 
 ## Credits
