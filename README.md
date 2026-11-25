@@ -4,7 +4,7 @@
 
 Short version: Ponytail made the app smaller (half the lines, about a quarter less by file size), a little cheaper and faster, with no must-fix bugs. It also took out the parts I liked.
 
-**Read the full write-up on [dev.to](https://dev.to/earlgreyhot1701d).**
+**Read the full write-up on [dev.to](https://dev.to/necoz/lazy-senior-dev-mode-made-my-app-smaller-was-it-better-90i).**
 
 *The experiment is frozen as it ran on Nov 21, 2026 (tag `experiment-2026-11-21`). Anything added later is listed in [ADDENDUM.md](ADDENDUM.md).*
 
